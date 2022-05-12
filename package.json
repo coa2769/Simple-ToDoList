@@ -1,5 +1,5 @@
 {
-  "name": "sleact-ts-front",
+  "name": "simple-todolist",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -7,7 +7,7 @@
     "dev": "cross-env TS_NODE_PROJECT=\\\"tsconfig-for-webpack-config.json\\\" webpack serve --env development",
     "build": "cross-env TS_NODE_PROJECT=\\\"tsconfig-for-webpack-config.json\\\" NODE_ENV=production webpack"
   },
-  "author": "ZeroCho",
+  "author": "PYS",
   "license": "MIT",
   "dependencies": {
     "@emotion/react": "^11.9.0",

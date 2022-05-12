@@ -81,10 +81,6 @@ const config: Configuration = {
     }),
     new webpack.EnvironmentPlugin({ 
       NODE_ENV: isDevelopment ? 'development' : 'production',
-      FRONTEND_PORT : 3090,
-      BACKEND_PORT : 8080,
-      DEV_SERVER_URL : 'http://localhost',
-      PROD_SERVER_URL : 'https://sleact.nodebird.com',
     }),
   ],
   output: {
@@ -100,16 +96,10 @@ const config: Configuration = {
     static: { directory: path.resolve(__dirname) },
 
     proxy : {
-      // '/api/': {
-      //   target: 'http://localhost:3095',
-      //   changeOrigin: true,
-      //   ws: true,
-      // },
-      // '/oauth2/' : {
-      //   target : 'http://localhost:8080', //소셜 로그인을 위해 준비된 서버 URL
-      //   changeOrigin : true,
-      //   ws : true,
-      // }
+      '/todo/' : {
+        target : 'https://assignment.alocados.xyz',
+        changeOrigin : true,
+      }
     }
     // hot : false,
   },

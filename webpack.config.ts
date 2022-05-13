@@ -90,11 +90,9 @@ const config: Configuration = {
   },
   devServer: {
     historyApiFallback: true,
-    hot : true,
     port: 3090, //FRONTEND_PORT이다.
     devMiddleware: { publicPath: '/dist/' },
     static: { directory: path.resolve(__dirname) },
-
     proxy : {
       '/todo/' : {
         target : 'https://assignment.alocados.xyz',

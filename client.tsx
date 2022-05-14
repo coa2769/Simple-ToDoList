@@ -5,16 +5,19 @@ import { render } from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 import axios from 'axios';
 
-
 import App from '@layouts/App';
+
+import { CookiesProvider } from 'react-cookie';
 
 axios.defaults.withCredentials = true;
 axios.defaults.baseURL =
   process.env.NODE_ENV === 'production' ? 'https://assignment.alocados.xyz' : 'http://localhost:3090';
 
 render(
-  <BrowserRouter>
-    <App />
-  </BrowserRouter>,
+  <CookiesProvider>
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+  </CookiesProvider>,
   document.querySelector('#app'),
 );

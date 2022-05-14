@@ -5,6 +5,7 @@ export const Container = styled.div`
     height : 100%;
 
     display : flex;
+    flex-direction : column;
     align-items : center;
     justify-content : center;
 `;
@@ -13,11 +14,13 @@ export const LginForm = styled.form`
     width : 370px;
     height : 356px;
 
-    margin : 0;
+    margin : 0px 0px 10px 0px;
 
     display : flex;
     flex-direction : column;
     justify-content : space-between;
+
+    position : relative;
 
     h5 {
         margin : 0;
@@ -43,12 +46,17 @@ export const LginForm = styled.form`
         border-bottom-color : #0053F4;
     }
 
-    .submitButton{
+    .submit-button{
         height : 56px;
         background-color : #0053F4;
         border-radius: 12px;
         box-shadow: 0px 6px 12px rgba(0, 83, 244, 0.2);
     }
 
+    .alert-error {
+        position : absolute;
+        left : 5px;
+        top : 370px;
+    }
     
 `;

@@ -3,7 +3,6 @@ import { Redirect, Route, Switch } from 'react-router';
 import { Link } from 'react-router-dom'
 import Logo from '@Assets/logo.svg';
 
-
 import {
   Header,
   Main,
@@ -23,15 +22,10 @@ const App = () => (
     </Header>
     <Main>
       <Switch>
-            {/* <Route exact path="/">
-                <Redirect to="/login"></Redirect>
-            </Route> */}
-
-            <Route path="/" component={SignIn} ></Route>
+            <Route exact path="/" component={SignIn} ></Route>
             <Route path="/list" component={Todo}></Route>
       </Switch>
     </Main>
-
   </div>
 
 )

@@ -1,4 +1,5 @@
 import React, { useCallback, useState } from "react";
+import { Redirect } from "react-router";
 
 import {
     Container,
@@ -9,31 +10,22 @@ import useInput from '@hooks/useInput';
 
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
+import Alert from '@mui/material/Alert';
 
+import { useCookies } from "react-cookie";
 import axios from 'axios';
 
 const SignIn = ()=>{
     const [logInError, setLogInError] = useState(false);
+    const [ cookies, setCookie ] = useCookies(['access-token']);
 
     const [ email, onChangeEmail ] = useInput('');
     const [ password, onChangePassword ] = useInput('');
-
-    // const [ email, setEmail ] = useState('');
-    // const [ password, setPassword ] = useState('');
-
-    // const onChangeEmail = useCallback((e)=>{
-    //     console.log(e.currentTarget.value);
-    //     setEmail(e.currentTarget.value);
-    // }, [email]);
-
-    // const onChangePassword = useCallback((e)=>{
-    //     console.log(e.currentTarget.value);
-    //     setPassword(e.currentTarget.value);
-    // }, [password]);
     
     const onSubmit = useCallback(
         (e)=>{
             e.preventDefault();
+            setLogInError(false);
             console.log('email', email);
             console.log('password', password);
 
@@ -43,16 +35,24 @@ const SignIn = ()=>{
                 { withCredentials: true, }
             )
             .then((res)=>{
-                console.log(res);
+                const expires = new Date();
+                expires.setMinutes(expires.getMinutes() + 60);
+                setCookie('access-token', res.data.access_token, {
+                    path : '/', 
+                    expires,
+                });
             })
             .catch((error)=>{
-                setLogInError(error.response?.data?.code === 401);
+                console.log(error.response);
+                setLogInError(error.response?.status === 401);
             });
         },
-        [email, password]
+        [email, password, logInError, cookies]
     );
-
-    // if(!error && )
+    
+    if(cookies["access-token"] !== undefined){
+        return <Redirect to="/list"></Redirect>
+    }
 
     return(
         <Container>
@@ -81,14 +81,17 @@ const SignIn = ()=>{
                     onChange={onChangePassword}
                 />
 
-            <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                className="submitButton"
-            >
-                로그인
-            </Button>
+                <Button
+                    type="submit"
+                    fullWidth
+                    variant="contained"
+                    className="submit-button"
+                >
+                    로그인
+                </Button>
+                { logInError && 
+                    <Alert className="alert-error" severity="error">이메일과 비밀번호 조합이 일치하지 않습니다.</Alert>
+                }
             </LginForm>
         </Container>
     )

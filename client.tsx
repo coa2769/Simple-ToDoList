@@ -8,16 +8,23 @@ import axios from 'axios';
 import App from '@layouts/App';
 
 import { CookiesProvider } from 'react-cookie';
+import { Provider } from 'react-redux';
+import { createStore } from "redux";
+import rootReducer from '@store/index';
 
 axios.defaults.withCredentials = true;
 axios.defaults.baseURL =
   process.env.NODE_ENV === 'production' ? 'https://assignment.alocados.xyz' : 'http://localhost:3090';
 
+const store = createStore(rootReducer);
+
 render(
-  <CookiesProvider>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
-  </CookiesProvider>,
+  <Provider store={store}>
+    <CookiesProvider>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </CookiesProvider>
+  </Provider>,
   document.querySelector('#app'),
 );

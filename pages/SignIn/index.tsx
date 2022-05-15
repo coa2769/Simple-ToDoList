@@ -32,7 +32,6 @@ const SignIn = ()=>{
             axios.post(
                 '/todo/login', 
                 { "user_id" : email, "user_pw" : password },
-                { withCredentials: true, }
             )
             .then((res)=>{
                 const expires = new Date();

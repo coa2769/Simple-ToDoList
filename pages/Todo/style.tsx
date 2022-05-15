@@ -9,3 +9,11 @@ export const Container = styled.div`
     align-items : center;
     justify-content : center;
 `;
+
+export const TodoBox = styled.div`
+    
+`;
+
+export const DoneBox = styled.div`
+    
+`;

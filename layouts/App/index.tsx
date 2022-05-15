@@ -1,7 +1,7 @@
 import React from 'react';
 import { Redirect, Route, Switch } from 'react-router';
 import { Link } from 'react-router-dom'
-import Logo from '@Assets/logo.svg';
+import Logo from '@assets/logo.svg';
 
 import {
   Header,

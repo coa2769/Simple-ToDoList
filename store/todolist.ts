@@ -1,5 +1,4 @@
 import { Todo } from '@typings/data';
-import { Set } from "typescript";
 import { randomNum } from '@utils/radom';
 
 const usedID = new Set<number>();
@@ -87,7 +86,10 @@ export function todos(state : TodolistState = initialState, action : TodolistAct
     }
     case DELETE:{
       usedID.delete(action.payload);
-      return state.filter((todo)=>todo.id !== action.payload);
+      let temp = state.filter((todo)=>todo.id !== action.payload);
+      console.log(temp);
+      return temp;
+      // return state.filter((todo)=>todo.id !== action.payload);
     }
     case COMPLETE: {
       newTodolist.forEach((todo)=>{

@@ -4,3 +4,6 @@ export interface Todo {
     value : string,
     done : boolean
 }
+
+
+export type TodoTextFieldType = 'modify' | 'nomal' | 'add';

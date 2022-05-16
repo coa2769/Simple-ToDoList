@@ -9,7 +9,7 @@ import {
 } from '@layouts/App/style';
 
 import SignIn from '@pages/SignIn';
-import Todo from '@pages/Todo';
+import Todo from '@container/TodoContainer';
 
 const App = () => (
   <div>

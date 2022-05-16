@@ -11,12 +11,13 @@ import { CookiesProvider } from 'react-cookie';
 import { Provider } from 'react-redux';
 import { createStore } from "redux";
 import rootReducer from '@store/index';
+import { composeWithDevTools } from 'redux-devtools-extension';
 
 axios.defaults.withCredentials = true;
 axios.defaults.baseURL =
   process.env.NODE_ENV === 'production' ? 'https://assignment.alocados.xyz' : 'http://localhost:3090';
 
-const store = createStore(rootReducer);
+const store = createStore(rootReducer, composeWithDevTools());
 
 render(
   <Provider store={store}>

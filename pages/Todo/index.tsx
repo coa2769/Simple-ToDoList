@@ -1,19 +1,18 @@
-import React, { useCallback, useEffect } from "react";
+import React, { useCallback, useEffect, useState, useMemo } from "react";
 import { Redirect } from "react-router";
 
 import { 
     Container,
-    TodoListBox,
-    DoneListBox,
-    TodoBox } from "@pages/Todo/style";
+    TodoBox,
+    DoneBox,
+    ListBox
+} from "@pages/Todo/style";
 
-import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
+import AddIcon from '@mui/icons-material/Add';
+import Fab from '@mui/material/Fab';
 
-// import TodoTextField from "@components/TodoTextField";
-import TodoTextFieldContainer from "@container/TodoTextFieldContainer";
 import TodoTextField from "@components/TodoTextField";
-import ModifyTextField from "@components/ModifyTextField";
+import DoneTextField from "@components/DoneTextField";
 
 import { useCookies } from "react-cookie";
 import { TodolistState } from '@store/todolist';
@@ -29,8 +28,6 @@ type TodoProps = {
     onCompleteTodo: (id : number)=>void;
     onDeleteTodo: (id : number)=>void;
 }
-
-const maxCount = 10;
 
 const TodoListPage = ({
     todolist,
@@ -61,27 +58,16 @@ const TodoListPage = ({
 
     }, []);
 
-    // const deleteTodo = useCallback((id : number)=>{
-    //     onDeleteTodo(id);
-    //     console.log(todolist);
-    // }, [todolist]);
-
-    // const onClick = useCallback((e)=>{
-    //     removeCookie("access-token");
-    // }, [cookies])
-    const onChange = useCallback((e)=>{
-        
+    const todoListCount = useMemo(()=>{
+        let count = 0;
+        todolist.forEach((todo)=>{if(todo.done === false)count++})
+        return count;
     }, [todolist])
 
-    const onClickDeleteButton = useCallback((e)=>{
-        console.log(e.currentTarget.value);
-        // e.currentTarget.
-        onDeleteTodo(Number(e.currentTarget.value));
-    }, [todolist]);
-
-    const onClickCompleteButton = useCallback((e)=>{
-
+    const onClickAddButton = useCallback((e)=>{
+        onAddTodo('');
     }, [todolist])
+
 
     if(cookies["access-token"] === undefined){
         return <Redirect to="/"></Redirect>
@@ -89,82 +75,53 @@ const TodoListPage = ({
 
     return(
         <Container>
-            <TodoListBox>
+            <TodoBox>
                 <h5>Todo</h5>
-            {/* 이미 있는 Todolist출력 */}
-            {
-                todolist.map((todo, index)=>(
-                //     <TodoBox key={index}>
-                //     {/* 더블 클릭 시 수정으로 변경 */}
-                    // <TextField
-                    //     disabled
-                    //     name="todo"
-                    //     variant="outlined"
-                    //     size="small"
-                    //     value={todo.value}
-                    //     // key={todo.id}
-                    //     onChange={onChange}
-                    //     // onDoubleClick={onDoubleClick}
-                    // />
-                //     <Button variant="text" value={todo.id} className="deleteButton" onClick={onClickDeleteButton}>
-                //         삭제
-                //     </Button>
-                //     <Button variant="contained" value={todo.id} className="completeButton" onClick={onClickCompleteButton}>
-                //         완료
-                //     </Button> : 
-                //     {/* { currentType === 'nomal' ? 
-                //         <CustomButton variant="contained" className="completeButton" onClick={onClickCompleteButton}>
-                //             완료
-                //         </CustomButton> : 
-                //         <CustomButton variant="text" className="modifyButton" onClick={onClickModifyButton}>
-                //             수정
-                //         </CustomButton>  
-                //     } */}
-                // </TodoBox>
-                <div className="" key={index}>
-                    <TodoTextField
-                        // key={index}
-                        value={todo.value}
-                        id={todo.id}
-                        type="nomal"
-                        onAdd={onAddTodo}
-                        onModify={onModifyTodo}
-                        onDelete={onDeleteTodo}
-                        onComplete={onCompleteTodo}
-                    />
-                    {/* <ModifyTextField
-                        // key={index}
-                        value={todo.value}
-                        id={todo.id}
-                        onAdd={onAddTodo}
-                        onModify={onModifyTodo}
-                        onDelete={onDeleteTodo}
-                        // value={todo.value}
-                        // id={todo.id}
-                        // onAdd={onAddTodo}
-                        // onModify={onModifyTodo}
-                        // onDelete={onDeleteTodo}
-                    /> */}
-                </div>
-
-                    
-                    // <TodoTextFieldContainer
-                    //     key={index}
-                    //     value={todo.value}
-                    //     id={todo.id}
-                    //     type="nomal"
-                    //     // onAdd={onAddTodo}
-                    //     // onModify={onModifyTodo}
-                    //     // onDelete={deleteTodo}
-                    //     // onComplete={onCompleteTodo}
-                    // />    
-                ))
-            }
+                {/* 이미 있는 Todolist출력 */}
+                <ListBox>
+                {
+                    todolist.map((todo, index)=>(
+                        !todo.done ?
+                        <TodoTextField
+                            key={index}
+                            value={todo.value}
+                            id={todo.id}
+                            type="nomal"
+                            // onAdd={onAddTodo}
+                            onModify={onModifyTodo}
+                            onDelete={onDeleteTodo}
+                            onComplete={onCompleteTodo}
+                            disableDelete={todoListCount <= 1? true : false}
+                        /> :
+                        null
+                    ))
+                }
+                </ListBox>
+                <Fab 
+                    disabled={todoListCount >= 10? true : false }
+                    color="primary" 
+                    className="addTodoButton"
+                    onClick={onClickAddButton}>
+                    <AddIcon />
+                </Fab>
             {/* 추가할 때 사용되는 TextField */}
-            </TodoListBox>
-            {/* <DoneListBox>
-
-            </DoneListBox> */}
+            </TodoBox>
+            <DoneBox>
+                <h5>Done</h5>
+                <ListBox>
+                {
+                    todolist.map((todo, index)=>(
+                        todo.done ?
+                        <DoneTextField
+                            key={index}
+                            value={todo.value}
+                            id={todo.id}
+                        /> :
+                        null
+                    ))
+                }
+                </ListBox>
+            </DoneBox>
             {/* <button onClick={onClick}>
                 로그아웃
             </button>

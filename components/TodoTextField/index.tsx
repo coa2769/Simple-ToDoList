@@ -1,9 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 import useInput from "@hooks/useInput";
 
-// import TextField from '@mui/material/TextField';
-// import Button from '@mui/material/Button';
-
 import { TodoTextFieldType } from '@typings/data';    
 
 import {
@@ -18,21 +15,22 @@ type TodoTextFieldProps = {
     value : string;
     id : number;
     type : TodoTextFieldType;
-    onAdd : (valud : string)=>void;
+    // onAdd : (valud : string)=>void;
     onModify : (id : number, value : string)=>void;
     onDelete : (id : number)=>void;
     onComplete : (id : number)=>void;
+    disableDelete : boolean;
 }
-
 
 const TodoTextField = ({
     value,
     id,
     type,
-    onAdd,
+    // onAdd,
     onModify,
     onDelete,
-    onComplete
+    onComplete,
+    disableDelete
 } : TodoTextFieldProps)=>{
     const [ currentText, onChangeCurrentText, setCurrentText ] = useInput(value);
     const [ currentType, setCurrentType ] = useState(type);
@@ -41,12 +39,11 @@ const TodoTextField = ({
         e.preventDefault();
         if(currentType !== 'modify'){
             setCurrentType('modify');
-            setCurrentText(value);
+            // setCurrentText(value);
         } 
     }, [ currentText, currentType ]);
 
     const onClickDeleteButton = useCallback((e)=>{
-        console.log(id);
         onDelete(id);
     }, [id]);
 
@@ -55,11 +52,11 @@ const TodoTextField = ({
     }, [id]);
 
     const onClickModifyButton = useCallback((e)=>{
-        if(currentType === 'modify'){
+        // if(currentType === 'modify'){
             onModify(id, currentText);
-        }else if(currentType === 'add'){
-            onAdd(currentText);
-        }
+        // }else if(currentType === 'add'){
+        //     onAdd(currentText);
+        // }
 
         setCurrentType('nomal');
     }, [currentText, currentType, id]);
@@ -87,20 +84,13 @@ const TodoTextField = ({
                     value={currentText}
                     onChange={onChangeCurrentText}
                     onDoubleClick={onDoubleClick}
-                    className=""
                 />
             }
-            {/* <CustomTextField
-                disabled={currentType === "nomal"}
-                type={currentType}
-                name="todo"
-                variant="outlined"
-                size="small"
-                value={value}
-                onChange={onChangeCurrentText}
-                onDoubleClick={onDoubleClick}
-            /> */}
-            <CustomButton variant="text" className="deleteButton" onClick={onClickDeleteButton}>
+            <CustomButton 
+                disabled={disableDelete}
+                variant="text" 
+                className="deleteButton" 
+                onClick={onClickDeleteButton}>
                 삭제
             </CustomButton> 
             { currentType === 'nomal' ? 

@@ -6,5 +6,4 @@ export interface Todo {
 }
 
 
-// export type TodoTextFieldType = 'modify' | 'nomal' | 'add';
 export type TodoTextFieldType = 'modify' | 'nomal';

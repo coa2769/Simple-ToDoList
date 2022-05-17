@@ -5,7 +5,6 @@ import { TodoTextFieldType } from '@typings/data';
 
 import {
     TodoBox,
-    // CustomTextField,
     CustomButton,
     DisabledTextField,
     ActivateTextField
@@ -15,7 +14,6 @@ type TodoTextFieldProps = {
     value : string;
     id : number;
     type : TodoTextFieldType;
-    // onAdd : (valud : string)=>void;
     onModify : (id : number, value : string)=>void;
     onDelete : (id : number)=>void;
     onComplete : (id : number)=>void;
@@ -26,7 +24,6 @@ const TodoTextField = ({
     value,
     id,
     type,
-    // onAdd,
     onModify,
     onDelete,
     onComplete,
@@ -39,9 +36,9 @@ const TodoTextField = ({
         e.preventDefault();
         if(currentType !== 'modify'){
             setCurrentType('modify');
-            // setCurrentText(value);
+            setCurrentText(value);
         } 
-    }, [ currentText, currentType ]);
+    }, [ currentText, currentType, value ]);
 
     const onClickDeleteButton = useCallback((e)=>{
         onDelete(id);
@@ -52,18 +49,14 @@ const TodoTextField = ({
     }, [id]);
 
     const onClickModifyButton = useCallback((e)=>{
-        // if(currentType === 'modify'){
-            onModify(id, currentText);
-        // }else if(currentType === 'add'){
-        //     onAdd(currentText);
-        // }
-
+        onModify(id, currentText);
+  
         setCurrentType('nomal');
     }, [currentText, currentType, id]);
 
-    useEffect(()=>{
-        setCurrentText(value);
-    },[value]);
+    // useEffect(()=>{
+    //     setCurrentText(value);
+    // },[value]);
 
     return(
         <TodoBox>

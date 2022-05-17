@@ -1,21 +1,18 @@
-import React, { useCallback, useEffect, useState } from "react";
-import useInput from "@hooks/useInput";
+import React from "react";
 
 import {
     TodoBox,
     CustomButton,
     DisabledTextField,
-} from '@components/TodoTextField/style'
+} from '@components/DoneTextField/style'
 
-type TodoTextFieldProps = {
+type DoneTextFieldProps = {
     value : string;
-    id : number;
 }
 
 const DoneTextField = ({
     value,
-    id,
-} : TodoTextFieldProps)=>{
+} : DoneTextFieldProps)=>{
     
 
     return(

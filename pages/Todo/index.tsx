@@ -1,11 +1,11 @@
 import React, { useCallback, useEffect, useState, useMemo } from "react";
-import { Redirect } from "react-router";
 
 import { 
     Container,
     TodoBox,
     DoneBox,
-    ListBox
+    ListBox,
+    Title
 } from "@pages/Todo/style";
 
 import AddIcon from '@mui/icons-material/Add';
@@ -47,7 +47,6 @@ const TodoListPage = ({
             }
         )
         .then((res)=>{
-            console.log(res.data.result["todo-list"]);
             const list : TodolistState = res.data.result["todo-list"].map(
                 (todo : Todo, index : number)=>({id : index, value : todo.value, done : false }));
             onInitTodo(list);
@@ -68,15 +67,10 @@ const TodoListPage = ({
         onAddTodo('');
     }, [todolist])
 
-
-    if(cookies["access-token"] === undefined){
-        return <Redirect to="/"></Redirect>
-    }
-
     return(
         <Container>
             <TodoBox>
-                <h5>Todo</h5>
+                <Title>Todo</Title>
                 {/* 이미 있는 Todolist출력 */}
                 <ListBox>
                 {
@@ -87,7 +81,6 @@ const TodoListPage = ({
                             value={todo.value}
                             id={todo.id}
                             type="nomal"
-                            // onAdd={onAddTodo}
                             onModify={onModifyTodo}
                             onDelete={onDeleteTodo}
                             onComplete={onCompleteTodo}
@@ -107,7 +100,7 @@ const TodoListPage = ({
             {/* 추가할 때 사용되는 TextField */}
             </TodoBox>
             <DoneBox>
-                <h5>Done</h5>
+                <Title>Done</Title>
                 <ListBox>
                 {
                     todolist.map((todo, index)=>(
@@ -115,17 +108,13 @@ const TodoListPage = ({
                         <DoneTextField
                             key={index}
                             value={todo.value}
-                            id={todo.id}
+                            // id={todo.id}
                         /> :
                         null
                     ))
                 }
                 </ListBox>
             </DoneBox>
-            {/* <button onClick={onClick}>
-                로그아웃
-            </button>
-            todo 화면 */}
         </Container>
     )
 }

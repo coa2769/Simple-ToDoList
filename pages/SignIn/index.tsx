@@ -26,8 +26,6 @@ const SignIn = ()=>{
         (e)=>{
             e.preventDefault();
             setLogInError(false);
-            console.log('email', email);
-            console.log('password', password);
 
             axios.post(
                 '/todo/login', 
@@ -42,7 +40,7 @@ const SignIn = ()=>{
                 });
             })
             .catch((error)=>{
-                console.log(error.response);
+                console.error(error);
                 setLogInError(error.response?.status === 401);
             });
         },

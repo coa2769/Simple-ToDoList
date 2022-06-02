@@ -40,21 +40,21 @@ const TodoListPage = ({
     const [ cookies, setCookie, removeCookie ] = useCookies(['access-token']);
 
     useEffect(()=>{
-        // API 서버가 작동하고 있을 때
-        // axios.get(
-        //     '/todo/me', 
-        //     { 
-        //         headers : {'Authorization' : 'Bearer ' + cookies["access-token"]}
-        //     }
-        // )
-        // .then((res)=>{
-        //     const list : TodolistState = res.data.result["todo-list"].map(
-        //         (todo : Todo, index : number)=>({id : index, value : todo.value, done : false }));
-        //     onInitTodo(list);
+        API 서버가 작동하고 있을 때
+        axios.get(
+            '/todo/me', 
+            { 
+                headers : {'Authorization' : 'Bearer ' + cookies["access-token"]}
+            }
+        )
+        .then((res)=>{
+            const list : TodolistState = res.data.result["todo-list"].map(
+                (todo : Todo, index : number)=>({id : index, value : todo.value, done : false }));
+            onInitTodo(list);
 
-        // }).catch((error)=>{
-        //     console.log(error);
-        // });
+        }).catch((error)=>{
+            console.log(error);
+        });
 
     }, []);
 

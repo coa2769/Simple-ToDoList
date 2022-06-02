@@ -27,22 +27,31 @@ const SignIn = ()=>{
             e.preventDefault();
             setLogInError(false);
 
-            axios.post(
-                '/todo/login', 
-                { "user_id" : email, "user_pw" : password },
-            )
-            .then((res)=>{
-                const expires = new Date();
-                expires.setMinutes(expires.getMinutes() + 60);
-                setCookie('access-token', res.data.access_token, {
-                    path : '/', 
-                    expires,
-                });
-            })
-            .catch((error)=>{
-                console.error(error);
-                setLogInError(error.response?.status === 401);
-            });
+            //1. API 서버가 작동하지 않을 때
+            const expires = new Date();
+            expires.setMinutes(expires.getMinutes() + 60);
+            setCookie('access-token', '123123123', {
+                path : '/', 
+                expires,
+            });            
+
+            //2. API 서버가 작동하고 있을 때
+            // axios.post(
+            //     '/todo/login', 
+            //     { "user_id" : email, "user_pw" : password },
+            // )
+            // .then((res)=>{
+            //     const expires = new Date();
+            //     expires.setMinutes(expires.getMinutes() + 60);
+            //     setCookie('access-token', res.data.access_token, {
+            //         path : '/', 
+            //         expires,
+            //     });
+            // })
+            // .catch((error)=>{
+            //     console.error(error);
+            //     setLogInError(error.response?.status === 401);
+            // });
         },
         [email, password, logInError, cookies]
     );

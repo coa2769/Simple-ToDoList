@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route, Switch } from 'react-router';
 import { Link } from 'react-router-dom'
-import Logo from '@assets/logo.svg';
+import Logo from '@assets/Square_logo.svg';
 
 import {
   Header,
@@ -17,6 +17,7 @@ const App = () => (
         <h1>
             <Link to="/">
                 <img src={Logo} alt="" />
+                TODO
             </Link>
         </h1>
     </Header>

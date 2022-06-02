@@ -6,10 +6,7 @@ export const Header = styled.header`
     top: 0px;
 
     width : 100%;
-    height : 56px;
-
     padding : 8px 24px;
-
 
     h1 {
         float : left;
@@ -17,8 +14,20 @@ export const Header = styled.header`
     }
     
     a {
-        display:inline-block
+        height : 40px;
+        color : rgb(19, 45, 111);
+        text-decoration: none;
+        display : flex;
+        align-items: center;
     }
+
+    img{
+        height : 40px;
+        width : 40px;
+        padding-right : 10px;
+    }
+
+    
 `;
 
 export const Main = styled.main`
